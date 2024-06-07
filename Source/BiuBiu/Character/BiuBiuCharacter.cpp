@@ -6,6 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 ABiuBiuCharacter::ABiuBiuCharacter()
@@ -15,7 +16,7 @@ ABiuBiuCharacter::ABiuBiuCharacter()
 	bUseControllerRotationRoll = false;
 	
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraBoom->SetupAttachment(RootComponent);
+	CameraBoom->SetupAttachment(GetMesh());
 	CameraBoom->SetRelativeLocation(FVector(0, 0, 60));
 	CameraBoom->SocketOffset.Y = 45.f;
 	CameraBoom->TargetArmLength = 450.f;
@@ -24,6 +25,8 @@ ABiuBiuCharacter::ABiuBiuCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom);
 	FollowCamera->bUsePawnControlRotation = false;
+
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
 void ABiuBiuCharacter::BeginPlay()
